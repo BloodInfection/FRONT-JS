@@ -1,0 +1,42 @@
+a,
+input {
+    display: block;
+    text-decoration: none;
+    color: darkslategrey;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.form {
+    height: 400px;
+    width: 400px;
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+
+.nav-link{
+    
+    color: white;
+    
+}
+.nav-link:hover{
+    color: rgba(255, 255, 255, 0.726)
+}
+
+.profile{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+
+}
+
+header{
+    background-color: rgb(123, 47, 194);
+    
+}

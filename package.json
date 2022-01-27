@@ -1,0 +1,28 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "This is package",
+  "main": "index.js",
+  "scripts": {
+    "start": " DEBUG=* node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BloodInfection/FRONT-JS.git"
+  },
+  "keywords": [
+    "fronttest",
+    "fashionshop"
+  ],
+  "author": "HummusChan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BloodInfection/FRONT-JS/issues"
+  },
+  "homepage": "https://github.com/BloodInfection/FRONT-JS#readme",
+  
+  "dependencies": {
+    "debug": "^4.3.3" 
+  }
+}
