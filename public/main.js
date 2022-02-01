@@ -1,65 +1,118 @@
-console.log("buba");
-var logi;
-var pass;
+console.log("JS загружен");
+
 const root = document.getElementById("root");
 
 window.onload = function(){
     console.log('dom загружен');
     //создание конструктора роутера
+
+
+ 
+
+
+
+    //grab all active attribute routes
+    var activeRoutes = Array.from(document.querySelectorAll('[route]'));
+    console.log('active routes: ', activeRoutes);
+    function navigate(event){
+        var route = event.target.attributes[0].value;
+        var routeInfo = MyRouter.routes.filter(function(r){
+            return r.path === route;
+        })[0];
+        
+        if (!routeInfo){
+            console.log('no route')
+            root.innerHTML = 'No route esists with this path'
+        }
+        else{
+            window.history.pushState({}, 'name',routeInfo.path);
+            if (routeInfo.name === 'root'){
+                console.log('this is root')
+                root.innerHTML=`
+        <div class="fs-4 mb-3">
+              
+              <p class = "welcome"> Welcome to Wearel    
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="rgb(123, 47, 194)" class="bi bi-bag-fill" viewBox="0 0 16 16">
+  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"></path>
+</svg>    <p>
+            </div>`;
+
+            } else if(routeInfo.name === 'signup'){
+                signupPage();
+                
+            } else if (routeInfo.name === 'logIn'){
+                loginPage();
+
+            } else if (routeInfo.name === 'profile'){
+                profilePage();
+            } 
+            
+        }
+        console.log('route info: ',routeInfo);
+    };
+    //addEventListeners
+    activeRoutes.forEach(function(route){
+        route.addEventListener('click', navigate, false);
+    });
+    
     var Router = function(name,routes){
         return {
             name: name,
             routes: routes
         }
     };
-
+    
     var MyRouter = new Router('MyRouter', [
      {
         path: '/',
-        name: 'Root'
+        name: 'root'
      },
      {
-        path: '/signin',
-        name: 'SignIn'
+        path: '/signup',
+        name: 'signup'
      },
      {
         path: '/login',
-        name: 'LogIn'
+        name: 'login'
      },
      {
         path: '/profile',
-        name: 'Profile' 
+        name: 'profile' 
      }  
     ]);
 
     var currentPath = window.location.pathname;
-    console.log(currentPath);
+    if (currentPath === '/'){
+        
+        root.innerHTML=`
+        <div class="fs-4 mb-3">
+              
+              <p class = "welcome"> Welcome to Wearel    
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="rgb(123, 47, 194)" class="bi bi-bag-fill" viewBox="0 0 16 16">
+  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"></path>
+</svg>    <p>
+            </div>`;
+
+    } 
+    else{
+        var route = MyRouter.routes.filter(function(r){
+            return r.path === currentPath
+        })[0];
+        if (route.name === 'login') {
+            loginPage();
+            
+        }
+        else if (route.name === 'profile'){
+            profilePage();
+        } else if (route.name ==='signup'){
+            signupPage();
+        } 
+        console.log('route: ',route);
+
+    }
 }
 
-//странички 
-const configApp = {
 
-
-    signup: {
-        //ключи
-        href: "/signup",
-        name: "Регистрация",
-        open: signupPage,
-    },
-
-    login: {
-        //ключи
-        href: "/login",
-        name: "Вход",
-        open: loginPage,
-    },
-
-    profile: {
-        //ключи
-        href: "/profile",
-        name: "Профиль",
-    },
-};
 //просто вспомогательная функция для инпута
 function createInput(type, placeholder, clas, id) {
     // создает инпут
@@ -72,76 +125,11 @@ function createInput(type, placeholder, clas, id) {
     return input;
 }
 //отрисовка меню
-function menuPage() {
-    root.innerHTML = "";
-    root.innerHTML=`
-    <header>
-    <ul class="nav">
-    <li class="nav-item">   
-      <a id="NavLinkReg" class="nav-link" href="#" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-</svg>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a  id = "NavLinkLog" class="nav-link" href="#" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-</svg>
-      </a>
-    </li>
-    <li class="nav-item">
-    
-      <a  id = "NavLinkProf" class="nav-link" href="#" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-</svg>
-        </a>
-    </li>
-    
-  </ul>
-  <header>
-  `
-    
-    regB = document.getElementById("NavLinkReg");
-    loginB = document.getElementById("NavLinkLog");
-    profB = document.getElementById("NavLinkProf");
-    regB.addEventListener('click', () => {
-        signupPage();
-     })
 
-     loginB.addEventListener('click', () => {
-        loginPage();
-     })
-
-     profB.addEventListener('click', () => {
-        profilePage();
-     })
-    /* Object.entries(configApp) //генерация верстки по конфигэпп //превращает обьект в массив массивов, первый арумент - ключ. второй - значение.
-        .map(([key, { href, name }]) => {
-            const menuElement = document.createElement("a");
-            menuElement.href = href;
-            menuElement.textContent = name;
-            menuElement.dataset.section = key; //data атрибут добавляется. Паттерн, когда нужно положить данные в элементы страницы, их кладут в дата атрбуты, чтобы потом как то с ними взаимодействовать.
-
-            return menuElement;
-        })
-        .forEach((el) => {
-            root.appendChild(el);
-        }); */
-}
 //отрисовка регистрации
 function signupPage() {
-    
-    
-
-    
-    
     root.innerHTML = `
-    {}
+    
     <div class="center-flex">
             <div class="form">
           <div class="mb-3"> 
@@ -159,19 +147,14 @@ function signupPage() {
             <input type="password" class="form-control" id="InputPasswordReg">
           </div>
           
-          <button id="backButtonId" class="btn btn-secondary">Назад</button>
+         
           <button id="signupId"  class="btn btn-primary">Зарегистрироваться</button>
         </div>
     </div>
             `;
     
     signupB = document.getElementById("signupId");
-    backB = document.getElementById("backButtonId");
-
-
-    backB.addEventListener('click', () => {
-        menuPage();
-    })
+    
     signupB.addEventListener("click", () => {
         password = document.getElementById("InputPasswordReg");
         username = document.getElementById("InputUsrenameReg");
@@ -201,18 +184,13 @@ function loginPage() {
             <input type="password" class="form-control" id="InputPasswordLog">
           </div>
           
-          <button id="backButtonId" class="btn btn-secondary">Назад</button>
+          
           <button id="loginId"  class="btn btn-primary">Войти</button>
         </div>
     </div>
             `;
     signupB = document.getElementById("loginId");
-    backB = document.getElementById("backButtonId");
-        
-        
-    backB.addEventListener('click', () => {
-        menuPage();
-     })
+    
     signupB.addEventListener("click", () => {
         password = document.getElementById("InputPasswordLog");
         username = document.getElementById("InputUsrenameLog");
@@ -225,19 +203,14 @@ function loginPage() {
 function profilePage(){
     root.innerHTML = ""; 
     root.innerHTML= `
-    <div class = "profile">
-    <button id="backButtonId" class="btn btn-secondary">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-</svg>
-    Назад</button>
-    
-    </div>
-    `;
-    backB = document.getElementById("backButtonId");
-    backB.addEventListener('click', () => {
-        menuPage();
-     })
+    <div class="fs-4 mb-3">
+              
+              <p class = "welcome">  <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+              <circle cx="8" cy="8" r="8"></circle>
+            </svg>&nbsp; &nbsp; Your profile page here    
+                 <p>
+            </div>`;
+   
 
 }
 //нужная хуйня(отправка пост запроса)
@@ -296,7 +269,34 @@ function signup(username, password, email)  {
 }
 
 
-menuPage();
+
+
+//---------------------ИНФА-------------------------------------
+
+/* const configApp = {
+
+
+    signup: {
+        //ключи
+        href: "/signup",
+        name: "Регистрация",
+        open: signupPage,
+    },
+
+    login: {
+        //ключи
+        href: "/login",
+        name: "Вход",
+        open: loginPage,
+    },
+
+    profile: {
+        //ключи
+        href: "/profile",
+        name: "Профиль",
+    },
+}; */
+
 
 /* //обработчик всех кликов, надо потом убрать
 root.addEventListener("click", (e) => {
@@ -313,11 +313,17 @@ root.addEventListener("click", (e) => {
 });
  */
 
-
-
-
  /*  let s = document.getElementsByTagName("a");
     console.log(s);
     console.log(root);
     let jj = "sdsdsdsds";
     let jopa = `${jj}stroke`; */
+
+    /* PUSH В GIT
+    git init(если не было до этого)
+    git add *
+    git commit -m "название"
+    it remote add  main https://github.com/BloodInfection/FRONT-JS (добавили куда пушить)
+    git push main --force
+    */
+

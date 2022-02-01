@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'RNS Miles';
+    src: local('RNS Miles Bold'), local('RNS-Miles-Bold'),
+        url('RNSMiles-Bold.woff2') format('woff2'),
+        url('RNSMiles-Bold.woff') format('woff'),
+        url('RNSMiles-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
 a,
 input {
     display: block;
@@ -22,6 +32,8 @@ input {
 .nav-link{
     
     color: white;
+    font-family: 'RNS Miles';
+    
     
 }
 .nav-link:hover{
@@ -39,4 +51,50 @@ input {
 header{
     background-color: rgb(123, 47, 194);
     
+}
+.welcome  {
+    color: rgb(123, 47, 194);
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    font-family: 'RNS Miles'
+    
+}
+
+.profile  {
+    color: rgb(123, 47, 194);
+    display: flex;
+    justify-content: center;
+    
+    
+    align-items: center;
+    font-family: 'RNS Miles'
+    
+}
+.nav{
+    width: fit-content;
+}
+
+.logo{
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    color: white;
+    
+    margin: 3px;
+    font-family: 'RNS Miles';
+}
+
+
+
+
+
+.btn-primary {
+    color: #fff;
+    background-color: rgb(123, 47, 194);
+    border-color: rgb(123, 47, 194);
 }

@@ -21,8 +21,10 @@
     "url": "https://github.com/BloodInfection/FRONT-JS/issues"
   },
   "homepage": "https://github.com/BloodInfection/FRONT-JS#readme",
-  
   "dependencies": {
-    "debug": "^4.3.3" 
+    "debug": "^4.3.3",
+    "express": "^4.17.2",
+    "gist": "^0.2.0",
+    "morgan": "^1.10.0"
   }
 }
