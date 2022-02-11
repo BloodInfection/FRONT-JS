@@ -147,3 +147,25 @@ a{
 .userFullName{
     font-size: 30px;
 }
+
+.navbar-brand{
+    color: #fff;
+}
+
+.dropdown-menu{
+  
+    text-align: left;
+}
+
+ul.dropdown-menu[data-bs-popper]{
+    left: -25%; 
+}
+
+.button.navbar-toggler-icon .navbar-toggle{
+    color: #fff;
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
+}
+

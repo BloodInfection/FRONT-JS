@@ -1,9 +1,9 @@
 
 
+
 console.log("JS загружен");
 
 const root = document.getElementById("root");
-var isLogged = false;
 var fullname;
 var Router = function(name,routes){
     return {
@@ -31,34 +31,10 @@ var MyRouter = new Router('MyRouter', [
  }
 ]);
 
-
-function sessioncheck()  {
-   
-    let xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    const url = "https://62.84.114.46:8080/v1/session/check";
-    json = "";
-    xhr.open("POST", url, false);
-    xhr.onreadystatechange = function() {
-        const statusOK = 200
-        if (xhr.readyState === xhr.DONE && xhr.status === statusOK) {
-            // выводим то, что ответил нам сервер — так мы убедимся, что данные он получил правильно
-            console.log(this.responseText);
-            console.log('Сесси дейсвтительна, юзер существует')
-            isLogged =  true;
-            
-        } else {
-            console.log("не авторизован");
-        }
-        console.log(xhr.status);
-    };
-
-    xhr.send(json);
-}
-
 function navigate(event){
     headerBuilder();
-    var route = event.target.attributes[0].value;
+    var route = event.target.getAttribute('route');
+    console.log('Route:', route)
     var routeInfo = MyRouter.routes.filter(function(r){
         return r.path === route;
     })[0];
@@ -95,9 +71,7 @@ window.onload = function(){
 
     var currentPath = window.location.pathname;
     if (currentPath === '/'){
-        
         indexPage();
-
     } 
     else{
         console.log('route: ',route);
@@ -132,63 +106,83 @@ function createInput(type, placeholder, clas, id) {
 }
 //отрисовка меню
 function headerBuilder(){
-       sessioncheck();
-    console.log(isLogged);
     let header = document.getElementById('header')
-    if (isLogged) {
-        header.innerHTML = `
-        <ul class="nav">
-        <li  route ='/' class = "logo" >
-            <h4  route ='/' id = "NavLinkLogo" class="logo" >Wearel</h4>
-        </li>
-        
-        <li route = '/profile' class="nav-item">
-          <a  route = '/profile' id = "NavLinkProf" class="nav-link"  >
-          <svg  route = '/profile' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-    </svg>
-            </a>
-        </li>
+    // if (isLogged) {
+    //     header.innerHTML = `
+    //   <nav class="navbar navbar-expand-lg">
+    //   <div class="container-fluid">
+    //     <a class="navbar-brand" route ='/' >Wearel</a>
+    //     <button   class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    //       <span class="navbar-toggler-icon"></span>
+    //     </button>
+    //     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    //       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    //       <li class="nav-item">
+    //           <a class="nav-link active" aria-current="page" href="#">Мужское</a>
+    //         </li>
+    //         <li class="nav-item">
+    //           <a class="nav-link" href="#">Женское</a>
+    //         </li>
+    //         <li class="nav-item">
+    //         <a class="nav-link" href="#">Бренды</a>
+    //       </li>
+    //       </ul>
+    
+    //       <form class="navbar-nav justify-content-end">
+    //         <li class="nav-item dropdown">
+    //           <a id ="onlyNameHead" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+    //           <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+    //             <li ><a id = "NavLinkLogOut" class="dropdown-item" >Выход</a></li>
+    //             <li ><a class="dropdown-item"  id = "NavLinkLogOut" route='/profile'>Профиль</a></li>
+    //           </ul>
+    //         </li>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </nav> 
+    // `;
+    //   fillHeaderName();
+    //   var logoutB = document.getElementById("NavLinkLogOut");
+    //   logoutB.addEventListener('click', logout, false )
+    // } else {
+    header.innerHTML = `
+    <nav class="navbar navbar-expand-lg">
+<div class="container-fluid">
+<a class="navbar-brand"  route ='/' >Wearel</a>
+<button  class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-three-dots" viewBox="0 0 16 16">
+    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+</svg></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Мужское</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Женское</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Бренды</a>
+    </li>
+    </ul>
 
-        <li   class="nav-item">
-          <a   id = "NavLinkLogOut" class="nav-link"  >
-          <svg    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"></path>
-          <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"></path>
-        </svg>
-            </a>
-        </li>
-        
-        
-      </ul>`;
-      var logoutB = document.getElementById("NavLinkLogOut");
-      logoutB.addEventListener('click', logout, false )
-    } else {
-        header.innerHTML = `
-            <ul class="nav">
-        <li  route ='/' class = "logo">
-            <h4  route ='/' id = "NavLinkLogo" class="logo" >Wearel</h4>
-        </li>
-        <li  route='/signup' class="nav-item">   
-          <a  route='/signup' id="NavLinkReg" class="nav-link"  >
-          <svg  route='/signup' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-      <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-      <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-    </svg>
-          </a>
-        </li>
-        <li route = '/login' class="nav-item">
-          <a  route = '/login' id = "NavLinkLog" class="nav-link"  >
-          <svg route = '/login' xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-      <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-    </svg>
-          </a>
-        </li>
-
-      </ul>
-        `
-    }
+    <form class="navbar-nav justify-content-end">
+    <li class="nav-item dropdown">
+        <a id ="onlyNameHead" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Авторизация
+        </a>
+        <ul id="autMenu" class="dropdown-menu " aria-labelledby="navbarDropdown">
+        <li ><a class="dropdown-item" route='/signup' >Регистрация</a></li>
+        <li ><a route='/login' class="dropdown-item">Вход</a></li> 
+        </ul>
+    </li>
+    </form>
+</div>
+</div>
+</nav>
+    `;
+    fillHeaderName();
     var activeRoutes = Array.from(document.querySelectorAll('[route]'));
     console.log('active routes: ', activeRoutes); 
     //addEventListeners
@@ -414,6 +408,67 @@ function logout()  {
     xhr.send(json);
 }
 
+function sessioncheck()  {
+   
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    const url = "https://62.84.114.46:8080/v1/session/check";
+    json = "";
+    xhr.open("POST", url, false);
+    xhr.onreadystatechange = function() {
+        const statusOK = 200
+        if (xhr.readyState === xhr.DONE && xhr.status === statusOK) {
+            // выводим то, что ответил нам сервер — так мы убедимся, что данные он получил правильно
+            console.log(this.responseText);
+            console.log('Сесси дейсвтительна, юзер существует')
+            isLogged =  true;
+            
+        } else {
+            console.log("не авторизован");
+        }
+        console.log(xhr.status);
+    };
+
+    xhr.send(json);
+}
+
+function fillHeaderName()  {
+   
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    const url = "https://62.84.114.46:8080/v1/user";
+    json = "";
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function() {
+        const statusOK = 200
+        if (xhr.readyState === xhr.DONE && xhr.status === statusOK) {
+            json = JSON.parse(this.responseText)
+            let onlyname = document.getElementById('onlyNameHead')
+            console.log(onlyname);
+            console.log(json['name'])
+            console.log(json)
+            onlyname.innerHTML=`${json['name']}`
+            let autMenu =  document.getElementById('autMenu') 
+            autMenu.innerHTML = 
+            `<li ><a id = "NavLinkLogOut" class="dropdown-item" >Выход</a></li>
+            <li ><a class="dropdown-item"  id = "NavLinkLogOut" route='/profile'>Профиль</a></li>`;
+            var logoutB = document.getElementById("NavLinkLogOut");
+            logoutB.addEventListener('click', logout, false )
+        }
+        if (xhr.readyState === xhr.DONE && xhr.status===401){
+            console.log("Выход не выполнен");
+        }
+        if (xhr.status===400){
+            console.log("Выход не выполнен");
+            
+        }
+        console.log(xhr.status);
+    };
+
+    xhr.send(json);
+}
+
+
 function getUserBySession(){
     
     let xhr = new XMLHttpRequest();
@@ -430,16 +485,21 @@ function getUserBySession(){
             let fullname = document.getElementById('fullNameProf');
             let phonenum =document.getElementById('phoneProf');
             let ema1l=document.getElementById('emailProf');
+            let onlyname =document.getElementById('onlyNameHead')
            
             fullname.innerHTML = `${json['surname'] +' '+ json['name']+' '+ json['patronymic']}` 
             phonenum.innerHTML =`${json['phone']}`
             ema1l.innerHTML =`${json['email']}`
+            onlyname.innerHTML=`${json['name']}`
             
             
            
             
             console.log(fullname);
         } 
+        if (xhr.readyState === xhr.DONE && xhr.status===401){
+            window.location.pathname = '/login'
+        }
         if (xhr.status===400){
             console.log("Выход не выполнен");
             

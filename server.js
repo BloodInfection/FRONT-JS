@@ -22,7 +22,7 @@ if (pages.includes(req.url)){
 
 
 
-console.log('request: ', req.url,'path: ', path, 'req headers: ', req.headers['user-agent']); //просто логи
+//console.log('request: ', req.url,'path: ', path, 'req headers: ', req.headers['user-agent']); //просто логи
 
 
 
