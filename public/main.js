@@ -58,8 +58,8 @@ function navigate(event){
         } else if (routeInfo.name === 'profile'){
             profilePage();
         } 
-        
     }
+    updateRoutes();
     console.log('route info: ',routeInfo);
 };
 
@@ -92,6 +92,15 @@ window.onload = function(){
     }
 }
 
+function updateRoutes() {
+    var activeRoutes = Array.from(document.querySelectorAll('[route]'));
+    console.log('active routes: ', activeRoutes); 
+    //addEventListeners
+     activeRoutes.forEach(function(route){
+        route.addEventListener('click', navigate, false);
+    });
+}
+
 
 //просто вспомогательная функция для инпута
 function createInput(type, placeholder, clas, id) {
@@ -106,45 +115,7 @@ function createInput(type, placeholder, clas, id) {
 }
 //отрисовка меню
 function headerBuilder(){
-    let header = document.getElementById('header')
-    // if (isLogged) {
-    //     header.innerHTML = `
-    //   <nav class="navbar navbar-expand-lg">
-    //   <div class="container-fluid">
-    //     <a class="navbar-brand" route ='/' >Wearel</a>
-    //     <button   class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    //       <span class="navbar-toggler-icon"></span>
-    //     </button>
-    //     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    //       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    //       <li class="nav-item">
-    //           <a class="nav-link active" aria-current="page" href="#">Мужское</a>
-    //         </li>
-    //         <li class="nav-item">
-    //           <a class="nav-link" href="#">Женское</a>
-    //         </li>
-    //         <li class="nav-item">
-    //         <a class="nav-link" href="#">Бренды</a>
-    //       </li>
-    //       </ul>
-    
-    //       <form class="navbar-nav justify-content-end">
-    //         <li class="nav-item dropdown">
-    //           <a id ="onlyNameHead" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
-    //           <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-    //             <li ><a id = "NavLinkLogOut" class="dropdown-item" >Выход</a></li>
-    //             <li ><a class="dropdown-item"  id = "NavLinkLogOut" route='/profile'>Профиль</a></li>
-    //           </ul>
-    //         </li>
-    //       </form>
-    //     </div>
-    //   </div>
-    // </nav> 
-    // `;
-    //   fillHeaderName();
-    //   var logoutB = document.getElementById("NavLinkLogOut");
-    //   logoutB.addEventListener('click', logout, false )
-    // } else {
+    let header = document.getElementById('header');
     header.innerHTML = `
     <nav class="navbar navbar-expand-lg">
 <div class="container-fluid">
@@ -182,13 +153,8 @@ function headerBuilder(){
 </div>
 </nav>
     `;
+    updateRoutes();
     fillHeaderName();
-    var activeRoutes = Array.from(document.querySelectorAll('[route]'));
-    console.log('active routes: ', activeRoutes); 
-    //addEventListeners
-     activeRoutes.forEach(function(route){
-        route.addEventListener('click', navigate, false);
-    });
 
 }
 //отрисовка регистрации
@@ -292,20 +258,49 @@ function loginPage() {
 }
 
 function profilePage(){
-    
-   
-    
     root.innerHTML= `
-    <div class = "userInfo">
+    <div class="container">
+  <div class="row">
+    <div class="col-4 userInfo">
+    <div class = "userFullName" id ="profProf">Профиль </div>
+    <div id="cartProf">Корзина</div>
+        <div id = "favsProf">Избранное</div> 
+        <div id= "looksProf">Мои луки</div> 
+        <div id = "settingsProf">Настройки</div>
+    </div>
+    <div class="col-8 userInfo" id ="profileContainer">
     <div class = "userFullName" id = "fullNameProf"></div>
         <div id = "phoneProf">Phone number</div>
         <div id ="emailProf">Email</div> 
-        </div>`
+    </div>
+  </div>
+</div>
+        
+        `
+    
+
     ;
     getUserBySession();
     
-   
+    favsB=document.getElementById("favsProf");
+    favsB.addEventListener('click', favoritesProfile, false )
+    profB =document.getElementById("profProf");
+    profB.addEventListener('click', profileProfile, false )
+    
 
+}
+
+
+function favoritesProfile(){
+    profileContainer = document.getElementById("profileContainer")
+    profileContainer.innerHTML=`<div class = "userFullName">Избранное</div>
+    <div >Здесь будет ваше избранное</div>
+    `
+}
+
+function profileProfile(){
+    profileContainer = document.getElementById("profileContainer")
+    
 }
 
 
@@ -454,6 +449,7 @@ function fillHeaderName()  {
             <li ><a class="dropdown-item"  id = "NavLinkLogOut" route='/profile'>Профиль</a></li>`;
             var logoutB = document.getElementById("NavLinkLogOut");
             logoutB.addEventListener('click', logout, false )
+            updateRoutes();
         }
         if (xhr.readyState === xhr.DONE && xhr.status===401){
             console.log("Выход не выполнен");

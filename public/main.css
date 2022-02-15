@@ -1,19 +1,8 @@
-@font-face {
-    font-family: 'RNS Miles';
-    src: local('RNS Miles Bold'), local('RNS-Miles-Bold'),
-        url('RNSMiles-Bold.woff2') format('woff2'),
-        url('RNSMiles-Bold.woff') format('woff'),
-        url('RNSMiles-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-
 a,
 input {
     display: block;
     text-decoration: none;
     color: darkslategrey;
-    font-family: 'Open Sans Condensed', sans-serif;
 }
 
 .form {
@@ -37,7 +26,6 @@ input {
 .nav-link{
     
     color: white;
-    font-family: 'RNS Miles';
     
     
 }
@@ -63,7 +51,6 @@ header{
     justify-content: center;
     height: 100vh;
     align-items: center;
-    font-family: 'RNS Miles'
     
 }
 
@@ -74,26 +61,12 @@ header{
     
     
     align-items: center;
-    font-family: 'RNS Miles'
+
     
 }
 .nav{
     width: fit-content;
 }
-
-.logo{
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    color: white;
-    
-    margin: 3px;
-    font-family: 'RNS Miles';
-}
-
 
 
 
@@ -104,7 +77,6 @@ header{
     border-color: rgb(123, 47, 194);
 }
 .btn-primary:hover{
-    color: #fff;
     background-color: rgba(123, 47, 194, 0.794);
     background-color: rgba(123, 47, 194, 0.794);
 }
@@ -135,13 +107,8 @@ a{
 
 .userInfo{
     color: rgb(123, 47, 194);
-    font-family: 'RNS Miles';
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 5%;
-    flex-wrap: wrap;
-    flex-direction: column;
+  
+     padding: 15px;
     
 }
 .userFullName{
@@ -161,11 +128,10 @@ ul.dropdown-menu[data-bs-popper]{
     left: -25%; 
 }
 
-.button.navbar-toggler-icon .navbar-toggle{
-    color: #fff;
-}
-
 .navbar-toggler:focus{
     box-shadow: none;
 }
 
+.container{
+    max-width: inherit;
+}
