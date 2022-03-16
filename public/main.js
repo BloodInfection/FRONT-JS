@@ -28,6 +28,37 @@ var MyRouter = new Router('MyRouter', [
  {
     path: '/profile',
     name: 'profile' 
+ },
+ 
+ {
+    path: '/profile/favorite',
+    name: 'favorite' 
+ },
+
+ {
+    path: '/profile/cart',
+    name: 'cart' 
+ },
+
+ {
+    path: '/profile/looks',
+    name: 'looks' 
+ },
+ {
+    path: '/profile/settings',
+    name: 'settings' 
+ },
+ {
+    path: '/mens',
+    name: 'mens' 
+ },
+ {
+    path: '/womens',
+    name: 'womens' 
+ },
+ {
+    path: '/brands',
+    name: 'brands' 
  }
 ]);
 
@@ -48,16 +79,45 @@ function navigate(event){
         if (routeInfo.name === 'root'){
             console.log('this is root')
             indexPage();
-
-        } else if(routeInfo.name === 'signup'){
-            signupPage();
-            
-        } else if (routeInfo.name === 'login'){
+        } 
+        else if(routeInfo.name === 'signup'){
+            signupPage();   
+        } 
+        else if (routeInfo.name === 'login'){
             loginPage();
-
-        } else if (routeInfo.name === 'profile'){
+        } 
+        else if (routeInfo.name === 'profile'){
             profilePage();
         } 
+        else if(routeInfo.name === 'cart'){
+            console.log('cart');
+            cartProfile();
+        } 
+        else if (routeInfo.name === 'favorite'){
+            console.log('favorite');
+            favoriteProfile();
+        } 
+        else if (routeInfo.name === 'looks'){
+            console.log('looks');
+            looksProfile();
+        }
+        else if(routeInfo.name === 'settings'){
+            console.log('settings');
+            settingsProfile();
+        }
+        else if(routeInfo.name === 'mens'){
+            console.log('mens');
+            mensPage();
+            
+        }
+        else if(routeInfo.name === 'womens'){
+            console.log('womens');
+            womensPage();
+        }
+        else if(routeInfo.name === 'brands'){
+            console.log('brands');
+            brandsPage();
+        }
     }
     updateRoutes();
     console.log('route info: ',routeInfo);
@@ -87,9 +147,36 @@ window.onload = function(){
         else if (route.name ==='signup'){
             signupPage();
         } 
-        console.log('route: ',route);
-
-    }
+        else if (route.name ==='cart'){
+            console.log('cart');
+            cartProfile();
+        }
+        else if (route.name ==='favorite'){
+            console.log('favorite');
+            favoriteProfile();
+        }
+        else if (route.name ==='looks'){
+            console.log('looks');
+            looksProfile();
+        }
+        else if (route.name ==='settings'){
+            console.log('settings');
+            settingsProfile();
+        }
+        else if(route.name ==='mens'){
+            console.log('mens');
+            mensPage();
+        }
+        else if(route.name ==='womens'){
+            console.log('womens');
+            womensPage();
+        }
+        else if(route.name ==='brands'){
+            console.log('brands')
+            brandsPage();
+        }
+    console.log('route: ',route);
+}
 }
 
 function updateRoutes() {
@@ -128,13 +215,13 @@ function headerBuilder(){
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Мужское</a>
+        <a class="nav-link active" aria-current="page" route='/mens'> Мужское </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Женское</a>
+        <a class="nav-link" route='/womens'> Женское </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="#">Бренды</a>
+    <a class="nav-link" route='/brands'> Бренды </a>
     </li>
     </ul>
 
@@ -156,6 +243,19 @@ function headerBuilder(){
     updateRoutes();
     fillHeaderName();
 
+}
+
+//отрисовка главной страницы
+function indexPage(){
+    
+    root.innerHTML=`
+        <div class="fs-4 mb-3">
+              
+              <p class = "welcome"> Welcome to Wearel    
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="rgb(123, 47, 194)" class="bi bi-bag-fill" viewBox="0 0 16 16">
+  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"></path>
+</svg>    <p>
+            </div>`;
 }
 //отрисовка регистрации
 function signupPage() {
@@ -256,17 +356,19 @@ function loginPage() {
     });
     console.log(signupB);
 }
-
+//отрисовка профиля
 function profilePage(){
     root.innerHTML= `
     <div class="container">
   <div class="row">
     <div class="col-4 userInfo">
-    <div class = "userFullName" id ="profProf">Профиль </div>
-    <div id="cartProf">Корзина</div>
-        <div id = "favsProf">Избранное</div> 
-        <div id= "looksProf">Мои луки</div> 
-        <div id = "settingsProf">Настройки</div>
+    <div class = "userFullName link" route ="/profile" id ="profProf" >Профиль </div>
+        
+        <div route ="/profile/cart" id="cartProf" class="link"  >Корзина</div>
+        <div route ="/profile/favorite" id = "favsProf" class="link">Избранное</div> 
+        <div route ="/profile/looks" id= "looksProf" class="link">Мои луки</div> 
+        <div route ="/profile/settings" id = "settingsProf" class="link">Настройки</div>
+
     </div>
     <div class="col-8 userInfo" id ="profileContainer">
     <div class = "userFullName" id = "fullNameProf"></div>
@@ -282,39 +384,109 @@ function profilePage(){
     ;
     getUserBySession();
     
-    favsB=document.getElementById("favsProf");
-    favsB.addEventListener('click', favoritesProfile, false )
-    profB =document.getElementById("profProf");
-    profB.addEventListener('click', profileProfile, false )
+   
     
 
 }
 
 
-function favoritesProfile(){
+function mensPage(){
+root.innerHTML=`<div class="fs-4 mb-3">
+              
+<p class = "welcome">Раздел мужской одежды<p>
+</div>
+`
+}
+function womensPage(){
+    
+    root.innerHTML=`
+
+<div class="collection">
+  <!Сделать цикл! -->
+  
+  <div class="product" id ="womensContainer">
+    
+    <a class="product__image" href="#" id ="womensImage"></a>
+    
+    <div class="product__name" >
+      <p>
+        <a id ="womensProdName"></a>
+      </p>
+    </div>
+    
+    <div class="product__price" > 
+      <p id="womensPrice"></p> 
+    </div>
+  
+    </div>
+  
+</div>
+ 
+  создадим массив полученных с сервера товаров, длиной цикла будет размер этого массива. В цикле выведем каждый элемент в соответствии со схемой выше
+`
+;
+getproducts();
+}
+
+
+
+function brandsPage(){
+    root.innerHTML=`
+
+    <div class="collection">
+      <!Сделать цикл! -->
+      
+      <div class="product">
+        
+        <a class="product__image" href="#"></a>
+        
+        <div class="product__name">
+          <p>
+            <a>Название бренда</a>
+          </p>
+        </div>
+        
+        
+      
+        </div>
+      
+    </div>
+     
+      создадим массив полученных с сервера товаров, длиной цикла будет размер этого массива. В цикле выведем каждый элемент в соответствии со схемой выше
+    `
+}
+
+//странички в профиле
+function favoriteProfile(){
     profileContainer = document.getElementById("profileContainer")
     profileContainer.innerHTML=`<div class = "userFullName">Избранное</div>
     <div >Здесь будет ваше избранное</div>
     `
 }
 
-function profileProfile(){
+function cartProfile(){
     profileContainer = document.getElementById("profileContainer")
-    
+    profileContainer.innerHTML=`<div class = "userFullName">Корзина</div>
+    <div >Здесь будет ваша  корзина</div>
+    `
+}
+
+function looksProfile(){
+    profileContainer = document.getElementById("profileContainer")
+    profileContainer.innerHTML=`<div class = "userFullName">Луки</div>
+    <div >Здесь будут ваши  луки</div>
+    `
+}
+
+function settingsProfile(){
+    profileContainer = document.getElementById("profileContainer")
+    profileContainer.innerHTML=`<div class = "userFullName">Настройки</div>
+    <div >Здесь будут ваши  настройки</div>
+    `
 }
 
 
-function indexPage(){
-    
-    root.innerHTML=`
-        <div class="fs-4 mb-3">
-              
-              <p class = "welcome"> Welcome to Wearel    
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="rgb(123, 47, 194)" class="bi bi-bag-fill" viewBox="0 0 16 16">
-  <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z"></path>
-</svg>    <p>
-            </div>`;
-}
+
 //нужная хуйня(отправка пост запроса)
 function login(email, password)  {
     json = JSON.stringify({ email: email, password: password }); //
@@ -402,7 +574,7 @@ function logout()  {
 
     xhr.send(json);
 }
-
+//нужно для проверки залогированности
 function sessioncheck()  {
    
     let xhr = new XMLHttpRequest();
@@ -426,7 +598,7 @@ function sessioncheck()  {
 
     xhr.send(json);
 }
-
+//вытаскиваем имя с бека
 function fillHeaderName()  {
    
     let xhr = new XMLHttpRequest();
@@ -462,6 +634,46 @@ function fillHeaderName()  {
     };
 
     xhr.send(json);
+}
+
+
+function getproducts(){
+     
+    testjson = {
+        "Sometching": "oheah",
+        "products": [
+            {
+            "name": "Molecule Man T-Shirt",
+            "price": 290,
+            "brand": "Nike",
+              
+            },
+            {
+            "name": "Molecule Man Skirt",
+            "price": 190,
+            "brand": "Stussy",
+            }
+        ]
+    }
+    console.log(testjson)
+    console.log("name=", testjson['products'][0]['name']);
+    
+
+    
+    var prods = testjson['products']; //это минимассив из джейсона. Его длина = нужной длине
+    var k =0;
+    console.log('prods',prods)
+   
+    
+    for (var i = 0; i < prods.length; i++) {
+        k++;
+        let productnameW = document.getElementById('womensProdName');
+        let priceW=document.getElementById('womensPrice');
+        productnameW.innerHTML = `${testjson['products'][i]['name']}` 
+        priceW.innerHTML =`${testjson['products'][i]['price']}` //заменяет все на последний элемент, нужно сделать так, чтобы поля сетки добавлялись
+    }
+    console.log(k)
+
 }
 
 

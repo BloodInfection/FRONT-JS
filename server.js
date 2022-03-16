@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs'); // для работы с файловой системой 
 const debug = require('debug'); //ищет локально и глобально
-let pages = ['/','/login','/signup','/profile'];
+let pages = ['/','/login','/signup','/profile', '/mens', '/womens', '/brands', '/profile/favorite',  '/profile/looks',  '/profile/cart',  '/profile/settings'];
 
 const log = debug('*') // инстанцируем дебаг(типа все логи теперь будут такие если прописать log)
 

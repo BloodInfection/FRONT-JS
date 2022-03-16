@@ -32,7 +32,12 @@ input {
 .nav-link:hover{
     color: rgba(255, 255, 255, 0.726)
 }
-
+.nav-link:active{
+    color: rgba(255, 255, 255, 0.726)
+}
+.nav-link:focus{
+    color: rgba(255, 255, 255, 0.726)
+}
 .profile{
     display: flex;
     justify-content: center;
@@ -78,12 +83,12 @@ header{
 }
 .btn-primary:hover{
     background-color: rgba(123, 47, 194, 0.794);
-    background-color: rgba(123, 47, 194, 0.794);
+   
 }
 .btn-primary:active{
     color: #fff;
     background-color: rgba(123, 47, 194, 0.794);
-    background-color: rgba(123, 47, 194, 0.794);
+  
 }
 .intl-tel-input {
   display: table-cell;
@@ -135,3 +140,35 @@ ul.dropdown-menu[data-bs-popper]{
 .container{
     max-width: inherit;
 }
+
+.link{
+    cursor: pointer;
+}
+a.navbar-brand:hover{
+    color: rgba(255, 255, 255, 0.794)
+  
+}
+
+
+.collection {
+    display: grid;
+    grid-auto-columns: max-content;
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(100px, auto);
+    grid-gap: 25px;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 60px auto;
+    max-width: 800px;
+  }
+  
+
+  
+  .product__name:active{
+    color:  rgb(123, 47, 194);
+  }
+  .product__name:hover{
+    color:  rgb(123, 47, 194);
+  }
+  .product__name{
+    text-decoration: none;
+  }
